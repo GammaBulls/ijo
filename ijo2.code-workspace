@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "backend",
+      "path": "backend"
+    },
+    {
+      "name": "frontend",
+      "path": "frontend"
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "files.associations": {
+      "Dockerfile.dev": "dockerfile",
+      "Dockerfile.prod": "dockerfile",
+      "*.jsx": "javascriptreact"
+    },
+    "editor.formatOnSave": true
+  }
+}

@@ -1,0 +1,20 @@
+FROM node:12.13-alpine
+
+WORKDIR /usr/app
+
+# Install dependencies
+COPY package.json yarn.lock ./
+RUN npm install
+
+# Copy prettier config file
+COPY .prettierrc ./
+
+# Copy app sources
+COPY src src/
+COPY public public/
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "serve"]
