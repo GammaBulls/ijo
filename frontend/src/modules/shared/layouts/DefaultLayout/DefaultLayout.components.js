@@ -4,9 +4,9 @@ import { ReactComponent as Logo } from "./appLogo.svg";
 
 export const LAYOUT_WIDTH = 890;
 export const HEADER_HEIGHT = 60;
-const LOGO_OFFSET_TOP = 6;
-const LOGO_OFFSET_LEFT = -6;
-const LOGO_HEIGHT = 72;
+const LOGO_OFFSET_TOP = 10;
+const LOGO_OFFSET_LEFT = -18;
+const LOGO_HEIGHT = 70;
 
 export const FIRST_SECTION_MARGIN =
   LOGO_HEIGHT + LOGO_OFFSET_TOP - HEADER_HEIGHT;
@@ -39,7 +39,7 @@ export const Header = styled.div`
 export const AppLogo = styled(Logo)`
   margin-top: ${LOGO_OFFSET_TOP}px;
   margin-left: ${LOGO_OFFSET_LEFT}px;
-  height: 72px;
+  height: ${LOGO_HEIGHT}px;
   width: auto;
 `;
 
