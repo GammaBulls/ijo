@@ -20,6 +20,9 @@
       "Dockerfile.prod": "dockerfile",
       "*.jsx": "javascriptreact"
     },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+      "Muli"
+    ]
   }
 }
