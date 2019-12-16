@@ -1,21 +1,34 @@
 import React from "react";
 import {
   AppLogo,
+  Footer,
   Header,
-  Wrapper,
+  LayoutWrapper,
+  SectionWrapper,
   WidthWrapper,
 } from "./DefaultLayout.components";
 
 const DefaultLayout = ({ children }) => {
   return (
-    <Wrapper>
+    <LayoutWrapper>
       <Header>
         <WidthWrapper>
           <AppLogo />
         </WidthWrapper>
       </Header>
-      <WidthWrapper column={true}>{children}</WidthWrapper>
-    </Wrapper>
+      {children}
+      <Footer>
+        <WidthWrapper>Footer</WidthWrapper>
+      </Footer>
+    </LayoutWrapper>
+  );
+};
+
+export const Section = ({ children, className }) => {
+  return (
+    <SectionWrapper className={className}>
+      <WidthWrapper>{children}</WidthWrapper>
+    </SectionWrapper>
   );
 };
 

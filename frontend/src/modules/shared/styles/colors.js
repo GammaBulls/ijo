@@ -1,6 +1,8 @@
 const colors = {
-  headerBackground: "#f0f0f0",
-  bodyBackground: "#e2e2ea",
+  headerBackground: "#f8f8f8",
+  defaultBorder: "#e0e0e0",
+  bodyBackground: "#e9e9e9",
+  contentBackground: "#f8f8f8",
 };
 
 export default colors;
