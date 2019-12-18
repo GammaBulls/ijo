@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import { ReactComponent as Logo } from "./appLogo.svg";
@@ -36,11 +37,22 @@ export const Header = styled.div`
   border-bottom: 1px solid ${colors.defaultBorder};
 `;
 
+export const AppBrandLink = styled(Link)`
+  color: ${colors.brandColor};
+  text-decoration: none;
+`;
+
 export const AppLogo = styled(Logo)`
   margin-top: ${LOGO_OFFSET_TOP}px;
   margin-left: ${LOGO_OFFSET_LEFT}px;
   height: ${LOGO_HEIGHT}px;
   width: auto;
+`;
+
+export const AppName = styled.span`
+  user-select: none;
+  font-weight: 600;
+  font-size: 22px;
 `;
 
 export const Footer = styled.div`
