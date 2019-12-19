@@ -44,9 +44,9 @@ export const routesConfig = [
     importComponent: () => import("../Ad"),
   },
   {
-    path: routesPaths.BROWSE,
+    path: routesPaths.BROWSE_ADS,
     exact: true,
-    importComponent: () => import("../Browse"),
+    importComponent: () => import("../BrowseAds"),
   },
   {
     path: routesPaths.CHAT,
