@@ -3,7 +3,7 @@ FROM node:12.13-alpine
 WORKDIR /usr/app
 
 # Install dependencies
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy prettier config file

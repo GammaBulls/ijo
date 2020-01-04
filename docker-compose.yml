@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  backend:
+    container_name: ijo-backend
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./backend/app:/app:cached"
+  frontend:
+    container_name: ijo-frontend
+    build: ./frontend
+    environment:
+      PORT: 3000
+      CHOKIDAR_USEPOLLING: 1
+      CHOKIDAR_POLLINTERVAL: 3000
+      NODE_ENV: development
+      REACT_APP_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./frontend/src:/usr/app/src:cached"
+      - "./frontend/public:/usr/app/public:cached"
