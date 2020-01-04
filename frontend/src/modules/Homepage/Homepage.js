@@ -15,7 +15,9 @@ const Homepage = () => {
       <ContentSection>
         <h1>Homepage</h1>
         {routesConfig.map(route => (
-          <Link to={route.path}>{route.path}</Link>
+          <Link key={route.path} to={route.path}>
+            {route.path}
+          </Link>
         ))}
       </ContentSection>
     </DefaultLayout>
