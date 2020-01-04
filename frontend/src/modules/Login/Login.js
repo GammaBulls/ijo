@@ -1,7 +1,8 @@
 import React from "react";
+import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
 
 const Login = () => {
-  return <h1>Login</h1>;
+  return <DefaultLayout>ELUWINA</DefaultLayout>;
 };
 
 export default Login;
