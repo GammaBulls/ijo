@@ -59,7 +59,7 @@ const routes = routesConfig.map(({ importComponent, ...routeConfig }) => {
   const component = lazy(importComponent);
 
   return (
-    <Route key={routesConfig.path} component={component} {...routeConfig} />
+    <Route key={routeConfig.path} component={component} {...routeConfig} />
   );
 });
 
