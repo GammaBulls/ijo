@@ -3,8 +3,33 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run-script up && npm run-script logs",
+    "up": "docker-compose up --build -d",
+    "logs": "docker-compose logs -f",
+    "down": "docker-compose down",
+    "stop": "docker-compose stop",
+    "install:all": "npm install && cd frontend/ && npm install"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "husky": "^4.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "frontend/src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1"
+  }
 }
