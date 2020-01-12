@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import { ReactComponent as Logo } from "./appLogo.svg";
+import Button from "../../components/Button";
 
 export const LAYOUT_WIDTH = 890;
 export const HEADER_HEIGHT = 60;
@@ -27,6 +28,23 @@ export const WidthWrapper = styled.div`
   width: ${LAYOUT_WIDTH}px;
   margin-left: auto;
   margin-right: auto;
+`;
+
+export const HeaderWidthWrapper = styled(WidthWrapper)`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+export const HeaderButtonWrapper = styled.div`
+  > * + * {
+    margin-left: 10px;
+  }
+`;
+
+export const HeaderButton = styled(Button)`
+  min-width: auto;
+  padding: 0 10px;
 `;
 
 export const Header = styled.div`

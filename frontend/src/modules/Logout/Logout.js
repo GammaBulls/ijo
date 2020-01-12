@@ -1,7 +1,19 @@
-import React from "react";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
+import useUserToken from "../../common/helpers/useUserToken";
+import { routesPaths } from "../Routing/routesPaths";
 
 const Logout = () => {
-  return <h1>Logout</h1>;
+  const [, setUserToken] = useUserToken();
+  const history = useHistory();
+
+  useEffect(() => {
+    setUserToken(null);
+    history.replace(routesPaths.HOMEPAGE);
+    window.location.reload();
+  }, [history, setUserToken]);
+
+  return null;
 };
 
 export default Logout;
