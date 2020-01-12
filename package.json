@@ -12,24 +12,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "husky": "^4.0.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "frontend/src/**/*.{js,jsx}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "lint-staged": "^9.5.0",
-    "prettier": "^1.19.1"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
