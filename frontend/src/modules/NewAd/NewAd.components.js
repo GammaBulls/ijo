@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import Button from "../shared/components/Button";
 import { Section } from "../shared/layouts/DefaultLayout";
 import { WidthWrapper } from "../shared/layouts/DefaultLayout/DefaultLayout.components";
 import colors from "../shared/styles/colors";
-import Input from "../shared/components/Input";
 
 export const ContentSection = styled(Section)`
   flex-grow: 1;
@@ -14,17 +12,15 @@ export const ContentSection = styled(Section)`
     display: flex;
     flex-direction: column;
   }
+  padding-top: 20px;
 `;
 
-export const SubmitButton = styled(Button).attrs({ type: "submit" })`
-  margin-top: 10px;
-  margin-bottom: 25px;
+export const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
 `;
 
-export const StyledInput = styled(Input)`
-  margin-bottom: 10px;
-`;
-
-export const Subtext = styled.span`
-  color: #ccc;
+export const ErrorWrapper = styled.span`
+  color: red;
+  font-size: 12px;
 `;

@@ -36,7 +36,7 @@ export const Action = styled(Link)`
   align-items: center;
 `;
 
-export const InnerSection = styled.div`
+export const InnerForm = styled.form`
   display: flex;
   flex-direction: column;
 

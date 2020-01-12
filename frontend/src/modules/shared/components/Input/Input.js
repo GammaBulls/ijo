@@ -1,12 +1,17 @@
 import styled from "styled-components";
+import colors from "../../styles/colors";
 
 const Input = styled.input`
-  margin-bottom: 10px;
   width: 320px;
-  border: thin solid #ccc;
   height: 34px;
+  border: thin solid #ccc;
   border-radius: 5px;
   padding: 0 8px;
+  outline: none;
+
+  :focus {
+    border-color: ${colors.brandColor};
+  }
 `;
 
 export default Input;

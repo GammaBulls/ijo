@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  Action,
-  ActionSelect,
-  BoxWrapper,
-  InnerSection,
-} from "./Box.components";
+import { Action, ActionSelect, BoxWrapper, InnerForm } from "./Box.components";
 
-const Box = ({ children, actions }) => {
+const Box = ({ children, actions, onSubmit }) => {
   return (
     <BoxWrapper>
       <ActionSelect>
@@ -16,7 +11,7 @@ const Box = ({ children, actions }) => {
           </Action>
         ))}
       </ActionSelect>
-      <InnerSection>{children}</InnerSection>
+      <InnerForm onSubmit={onSubmit}>{children}</InnerForm>
     </BoxWrapper>
   );
 };

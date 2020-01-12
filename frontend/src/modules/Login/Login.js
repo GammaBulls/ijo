@@ -2,11 +2,11 @@ import React, { useCallback, useMemo } from "react";
 import useInputState from "../../common/helpers/useInputState";
 import { routesPaths } from "../Routing/routesPaths";
 import Box from "../shared/components/Box";
-import Input from "../shared/components/Input";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
 import {
   ContentSection,
   ForgotPassword,
+  StyledInput,
   SubmitButton,
   Subtext,
 } from "./Login.components";
@@ -37,15 +37,15 @@ const Login = () => {
   return (
     <DefaultLayout>
       <ContentSection>
-        <Box actions={actions}>
-          <Input
+        <Box actions={actions} onSubmit={handleSubmit}>
+          <StyledInput
             type="email"
             autoComplete="email"
             placeholder="E-mail"
             value={email}
             onChange={handleEmailChange}
           />
-          <Input
+          <StyledInput
             type="password"
             autoComplete="current-password"
             placeholder="Hasło"
@@ -55,7 +55,7 @@ const Login = () => {
           <ForgotPassword to={routesPaths.RESET_PASSWORD}>
             Przypomnienie hasła
           </ForgotPassword>
-          <SubmitButton onClick={handleSubmit}>Zaloguj się</SubmitButton>
+          <SubmitButton>Zaloguj się</SubmitButton>
           <Subtext>
             Zalogowanie oznacza akceptację Regulaminu serwisu w aktualnym
             brzmieniu.

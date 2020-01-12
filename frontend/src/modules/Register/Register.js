@@ -2,9 +2,13 @@ import React, { useCallback, useMemo } from "react";
 import useInputState from "../../common/helpers/useInputState";
 import { routesPaths } from "../Routing/routesPaths";
 import Box from "../shared/components/Box";
-import Input from "../shared/components/Input";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
-import { ContentSection, SubmitButton, Subtext } from "./Register.components";
+import {
+  ContentSection,
+  StyledInput,
+  SubmitButton,
+  Subtext,
+} from "./Register.components";
 
 const Register = () => {
   const [name, handleNameChange] = useInputState();
@@ -34,36 +38,36 @@ const Register = () => {
   return (
     <DefaultLayout>
       <ContentSection>
-        <Box actions={actions}>
-          <Input
+        <Box actions={actions} onSubmit={handleSubmit}>
+          <StyledInput
             type="text"
             autoComplete="given-name"
             placeholder="Imię"
             value={name}
             onChange={handleNameChange}
           />
-          <Input
+          <StyledInput
             type="tel"
             autoComplete="tel"
             placeholder="Numer telefonu"
             value={phone}
             onChange={handlePhoneChange}
           />
-          <Input
+          <StyledInput
             type="email"
             autoComplete="email"
             placeholder="E-mail"
             value={email}
             onChange={handleEmailChange}
           />
-          <Input
+          <StyledInput
             type="password"
-            autoComplete="current-password"
+            autoComplete="new-password"
             placeholder="Hasło"
             value={password}
             onChange={handlePasswordChange}
           />
-          <SubmitButton onClick={handleSubmit}>Zarejestruj się</SubmitButton>
+          <SubmitButton>Zarejestruj się</SubmitButton>
           <Subtext>
             Rejestracja oznacza akceptację Regulaminu serwisu w aktualnym
             brzmieniu.
