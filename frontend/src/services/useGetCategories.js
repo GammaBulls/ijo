@@ -1,18 +1,18 @@
 import useWretch from "./useWretch";
 import { useState, useEffect } from "react";
 
-const useGetMe = ({ skip }) => {
+const useGetCategories = ({ skip } = {}) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(!skip);
-  const wretch = useWretch();
+  const wretch = useWretch(); //TODO: useWretch(false);
 
   useEffect(() => {
     const execute = async () => {
       setLoading(true);
       try {
         const data = await wretch
-          .url("/me")
+          .url("/categories")
           .get()
           .json();
         setData(data);
@@ -30,4 +30,4 @@ const useGetMe = ({ skip }) => {
   return { data, error, loading };
 };
 
-export default useGetMe;
+export default useGetCategories;

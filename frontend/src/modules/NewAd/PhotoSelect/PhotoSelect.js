@@ -26,11 +26,15 @@ const PhotoSelect = ({ file, setFile }) => {
     }
   }, [file]);
 
-  const onWrapperClick = useCallback(() => {
-    inputRef.current.click();
-  }, [inputRef]);
-
   const shouldShowPreview = !!file;
+
+  const onWrapperClick = useCallback(() => {
+    if (shouldShowPreview) {
+      setFile(null);
+    } else {
+      inputRef.current.click();
+    }
+  }, [setFile, shouldShowPreview]);
 
   return (
     <Wrapper onClick={onWrapperClick}>
@@ -41,7 +45,7 @@ const PhotoSelect = ({ file, setFile }) => {
         onChange={onFileChange}
         ref={inputRef}
       />
-      <AddImage hasImage={!shouldShowPreview} />
+      <AddImage hasImage={shouldShowPreview} />
       {shouldShowPreview && <PreviewImage src={preview} />}
     </Wrapper>
   );

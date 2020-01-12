@@ -29,7 +29,7 @@ const Login = () => {
         const { access_token } = await login({ email, password });
         setUserToken(access_token);
         history.push(routesPaths.HOMEPAGE);
-        window.location.reload(); //TODO: replace with useLazyGetMe
+        toast.success("Pomyślnie zalogowano.");
       } catch (error) {
         toast.error(error.message);
       }

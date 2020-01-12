@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import colors from "../../shared/styles/colors";
 
 const SIZE = 74;
@@ -30,10 +30,10 @@ export const AddImage = styled.div`
   height: 100%;
   position: absolute;
 
-  --color: ${p => (p.hasImage ? "#ccc" : "transparent")};
+  --color: ${p => (!p.hasImage ? "#ccc" : "transparent")};
 
   :hover {
-    --color: ${p => (!p.hasImage ? "#ccc" : colors.brandColor60)};
+    --color: ${p => (p.hasImage ? "#ccc" : colors.brandColor60)};
   }
 
   ::before {
@@ -63,5 +63,10 @@ export const AddImage = styled.div`
     bottom: 0;
     transition: all 0.2s;
     border-radius: ${RADIUS}px;
+    ${p =>
+      p.hasImage &&
+      css`
+        display: none;
+      `}
   }
 `;

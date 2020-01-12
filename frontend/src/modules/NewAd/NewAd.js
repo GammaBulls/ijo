@@ -1,32 +1,25 @@
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import useInputState from "../../common/helpers/useInputState";
+import Button from "../shared/components/Button";
 import Input from "../shared/components/Input";
 import Select from "../shared/components/Select";
 import TextArea from "../shared/components/TextArea";
+import useCategoriesOptions from "../shared/hooks/useCategoriesOptions";
 import DefaultLayout from "../shared/layouts/DefaultLayout";
 import FormSection from "./FormSection";
 import LabelWrapper from "./LabelWrapper";
-import { ContentSection, FormWrapper, ErrorWrapper } from "./NewAd.components";
+import { ContentSection, ErrorWrapper, FormWrapper } from "./NewAd.components";
 import { MultiPhotoSelect } from "./PhotoSelect";
-import Button from "../shared/components/Button";
+import usePostAd from "../../services/usePostAd";
 
 const NewAd = () => {
   const [title, setTitle] = useInputState();
-  const [categoriesOptions, loading] = useMemo(
-    () => [
-      [
-        { label: "A", value: 1 },
-        { label: "B", value: 2 },
-        { label: "C", value: 3 },
-      ],
-      false,
-    ],
-    [],
-  ); // useCategoriesOptions();
+  const [categoriesOptions, categoriesLoading] = useCategoriesOptions();
   const [category, setCategory] = useState();
   const [price, setPrice] = useInputState();
   const [description, setDescription] = useInputState();
   const [photos, setPhotos] = useState([]);
+  const [postAd, { loading }] = usePostAd();
 
   const validate = useCallback(
     async ({ title, category, price, description }) => {
@@ -39,8 +32,8 @@ const NewAd = () => {
       ) {
         throw new Error("Kategoria jest wymagana");
       }
-      if (!price || !price.length) {
-        throw new Error("Cena jest wymagana");
+      if (!price || !price.length || !parseFloat(price, 10)) {
+        throw new Error("Cena jest wymagana.");
       }
       if (!description || !description.length) {
         throw new Error("Opis jest wymagany");
@@ -63,11 +56,12 @@ const NewAd = () => {
       try {
         setError(null);
         await validate(values);
+        await postAd(values);
       } catch (e) {
         setError(e);
       }
     },
-    [category, description, photos, price, title, validate],
+    [category, description, photos, postAd, price, title, validate],
   );
 
   return (
@@ -83,11 +77,17 @@ const NewAd = () => {
                 value={category}
                 onChange={setCategory}
                 options={categoriesOptions}
-                isLoading={loading}
+                isLoading={categoriesLoading}
               />
             </LabelWrapper>
             <LabelWrapper label="Podaj cenę" required={true}>
-              <Input value={price} onChange={setPrice} />
+              <Input
+                value={price}
+                onChange={setPrice}
+                type="number"
+                step="0.01"
+                min="0"
+              />
             </LabelWrapper>
           </FormSection>
           <FormSection>
@@ -102,7 +102,9 @@ const NewAd = () => {
               />
             </LabelWrapper>
             <LabelWrapper>
-              <Button type="submit">Dodaj ogłoszenie</Button>
+              <Button disabled={categoriesLoading || loading} type="submit">
+                Dodaj ogłoszenie
+              </Button>
             </LabelWrapper>
             {error && <ErrorWrapper>{error.message}</ErrorWrapper>}
           </FormSection>

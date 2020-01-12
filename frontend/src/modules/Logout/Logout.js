@@ -1,17 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 import useUserToken from "../../common/helpers/useUserToken";
 import { routesPaths } from "../Routing/routesPaths";
 
 const Logout = () => {
-  const [, setUserToken] = useUserToken();
+  const [userToken, setUserToken] = useUserToken();
+  const [showNotification] = useState(!!userToken);
   const history = useHistory();
 
   useEffect(() => {
     setUserToken(null);
-    history.replace(routesPaths.HOMEPAGE);
-    window.location.reload();
-  }, [history, setUserToken]);
+  });
+
+  useEffect(() => {
+    if (!userToken) {
+      history.replace(routesPaths.HOMEPAGE);
+      if (showNotification) {
+        toast.success("Pomyślnie wylogowano.");
+      }
+    }
+  }, [history, showNotification, userToken]);
 
   return null;
 };
