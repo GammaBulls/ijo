@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo } from "react";
+import { toast } from "react-toastify";
 import useInputState from "../../common/helpers/useInputState";
+import useRegister from "../../services/useRegister";
 import { routesPaths } from "../Routing/routesPaths";
 import Box from "../shared/components/Box";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
@@ -15,10 +17,35 @@ const Register = () => {
   const [phone, handlePhoneChange] = useInputState();
   const [email, handleEmailChange] = useInputState();
   const [password, handlePasswordChange] = useInputState();
+  const [register, { loading }] = useRegister();
 
-  const handleSubmit = useCallback(() => {
-    alert(`szczelam do api ${email} ${password}`);
-  }, [email, password]);
+  const handleSubmit = useCallback(
+    async e => {
+      e.preventDefault();
+      try {
+        await register({ name, phone, email, password });
+        toast.success("Sprawdź maila!");
+        //Boże wybacz
+        handleNameChange({ target: { value: "" } });
+        handlePhoneChange({ target: { value: "" } });
+        handleEmailChange({ target: { value: "" } });
+        handlePasswordChange({ target: { value: "" } });
+      } catch (error) {
+        toast.error(error.message);
+      }
+    },
+    [
+      email,
+      handleEmailChange,
+      handleNameChange,
+      handlePasswordChange,
+      handlePhoneChange,
+      name,
+      password,
+      phone,
+      register,
+    ],
+  );
 
   const actions = useMemo(
     () => [
@@ -67,7 +94,7 @@ const Register = () => {
             value={password}
             onChange={handlePasswordChange}
           />
-          <SubmitButton>Zarejestruj się</SubmitButton>
+          <SubmitButton disabled={loading}>Zarejestruj się</SubmitButton>
           <Subtext>
             Rejestracja oznacza akceptację Regulaminu serwisu w aktualnym
             brzmieniu.

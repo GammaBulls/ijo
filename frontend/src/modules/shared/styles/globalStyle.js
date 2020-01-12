@@ -1,5 +1,5 @@
+import "react-toastify/dist/ReactToastify.min.css";
 import { createGlobalStyle } from "styled-components";
-
 import colors from "./colors";
 
 const GlobalStyle = createGlobalStyle`

@@ -1,5 +1,9 @@
 import React, { useCallback, useMemo } from "react";
+import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 import useInputState from "../../common/helpers/useInputState";
+import useUserToken from "../../common/helpers/useUserToken";
+import useLogin from "../../services/useLogin";
 import { routesPaths } from "../Routing/routesPaths";
 import Box from "../shared/components/Box";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
@@ -14,10 +18,24 @@ import {
 const Login = () => {
   const [email, handleEmailChange] = useInputState();
   const [password, handlePasswordChange] = useInputState();
+  const [login, { loading }] = useLogin();
+  const history = useHistory();
+  const [, setUserToken] = useUserToken();
 
-  const handleSubmit = useCallback(() => {
-    alert(`szczelam do api ${email} ${password}`);
-  }, [email, password]);
+  const handleSubmit = useCallback(
+    async e => {
+      e.preventDefault();
+      try {
+        const { access_token } = await login({ email, password });
+        setUserToken(access_token);
+        history.push(routesPaths.HOMEPAGE);
+        window.location.reload(); //TODO: replace with useLazyGetMe
+      } catch (error) {
+        toast.error(error.message);
+      }
+    },
+    [email, history, login, password, setUserToken],
+  );
 
   const actions = useMemo(
     () => [
@@ -55,7 +73,7 @@ const Login = () => {
           <ForgotPassword to={routesPaths.RESET_PASSWORD}>
             Przypomnienie hasła
           </ForgotPassword>
-          <SubmitButton>Zaloguj się</SubmitButton>
+          <SubmitButton disabled={loading}>Zaloguj się</SubmitButton>
           <Subtext>
             Zalogowanie oznacza akceptację Regulaminu serwisu w aktualnym
             brzmieniu.

@@ -16,6 +16,11 @@ const Button = styled.button`
   :hover {
     transform: scale(1.1);
   }
+
+  &[disabled] {
+    background: ${colors.brandColor60};
+    cursor: not-allowed;
+  }
 `;
 
 export default Button;

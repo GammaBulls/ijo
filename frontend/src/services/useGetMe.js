@@ -1,14 +1,15 @@
 import useWretch from "./useWretch";
 import { useState, useEffect } from "react";
 
-const useGetMe = () => {
+const useGetMe = ({ skip }) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!skip);
   const wretch = useWretch();
 
   useEffect(() => {
     const execute = async () => {
+      setLoading(true);
       try {
         const data = await wretch
           .url("/me")
@@ -16,14 +17,15 @@ const useGetMe = () => {
           .json();
         setData(data);
       } catch (error) {
-        console.error(error);
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-    execute();
-  }, [wretch]);
+    if (!skip) {
+      execute();
+    }
+  }, [skip, wretch]);
 
   return { data, error, loading };
 };
