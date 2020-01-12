@@ -5,7 +5,7 @@ const usePostAd = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const wretch = useWretch(false);
+  const wretch = useWretch();
 
   const postAd = useCallback(
     async ({ price, title, categoryId, pictureUrl, description }) => {

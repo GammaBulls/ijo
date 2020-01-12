@@ -22,13 +22,13 @@ const NewAd = () => {
   const [postAd, { loading }] = usePostAd();
 
   const validate = useCallback(
-    async ({ title, category, price, description }) => {
+    async ({ title, categoryId, price, description }) => {
       if (!title || !title.length) {
         throw new Error("Tytuł jest wymagany");
       }
       if (
-        !category ||
-        !categoriesOptions.some(({ value }) => value === category.value)
+        !categoryId ||
+        !categoriesOptions.some(({ value }) => value === categoryId)
       ) {
         throw new Error("Kategoria jest wymagana");
       }
@@ -48,7 +48,7 @@ const NewAd = () => {
       e.preventDefault();
       const values = {
         title,
-        category,
+        categoryId: category.value,
         price,
         description,
         photos,
