@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-const AppContext = createContext({ userInfo: null, userToken: null });
+const AppContext = createContext({ userInfo: null });
 
 export const useAppContext = () => useContext(AppContext);
 

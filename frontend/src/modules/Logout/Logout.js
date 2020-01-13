@@ -17,7 +17,7 @@ const Logout = () => {
     if (!userToken) {
       history.replace(routesPaths.HOMEPAGE);
       if (showNotification) {
-        toast.success("Pomyślnie wylogowano.");
+        toast.info("Pomyślnie wylogowano.");
       }
     }
   }, [history, showNotification, userToken]);

@@ -17,6 +17,7 @@ const useGetCategories = ({ skip } = {}) => {
           .json();
         setData(data);
       } catch (error) {
+        setData(null);
         setError(error);
       } finally {
         setLoading(false);

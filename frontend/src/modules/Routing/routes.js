@@ -44,11 +44,6 @@ export const routesConfig = [
     importComponent: () => import("../Ad"),
   },
   {
-    path: routesPaths.BROWSE_ADS,
-    exact: true,
-    importComponent: () => import("../BrowseAds"),
-  },
-  {
     path: routesPaths.CHAT,
     exact: true,
     importComponent: () => import("../Chat"),

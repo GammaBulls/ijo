@@ -7,6 +7,5 @@ export const routesPaths = {
   MY_PROFILE: "/my-profile/:page?",
   NEW_AD: "/ad/new",
   AD: "/ad/:id",
-  BROWSE_ADS: "/ads",
   CHAT: "/chat/:conversationId?",
 };

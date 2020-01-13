@@ -1,28 +1,21 @@
 import { useCallback, useState } from "react";
 import useWretch from "./useWretch";
 
-const useLogin = () => {
+const useGetAds = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const wretch = useWretch(false);
+  const wretch = useWretch();
 
-  const verify = useCallback(({ message }) => {
-    if (message.startsWith("Logged in as ")) {
-      return true;
-    }
-    throw new Error(`Unsuccessful login: ${message}`);
-  }, []);
-
-  const login = useCallback(
-    async ({ email, password }) => {
+  const getAds = useCallback(
+    async ({ categoryId, name, price }) => {
       setLoading(true);
       try {
         const data = await wretch
-          .url("/login")
-          .post({ email, password })
+          .url("/ad")
+          .query({ categoryId, name, price })
+          .get()
           .json();
-        verify(data);
         setData(data);
         return data;
       } catch (error) {
@@ -33,10 +26,10 @@ const useLogin = () => {
         setLoading(false);
       }
     },
-    [verify, wretch],
+    [wretch],
   );
 
-  return [login, { data, error, loading }];
+  return [getAds, { data, error, loading }];
 };
 
-export default useLogin;
+export default useGetAds;

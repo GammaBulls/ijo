@@ -1,10 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { routesConfig } from "../Routing/routes";
+import React, { useState } from "react";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
+import Ads from "./Ads";
 import { ContentSection, SearchSection } from "./Homepage.components";
 
 const Homepage = () => {
+  const [
+    name,
+    //  setName
+  ] = useState();
+  const [
+    categoryId,
+    //  setCategoryId
+  ] = useState();
+  const [
+    price,
+    // setPrice
+  ] = useState();
+
   return (
     <DefaultLayout>
       <SearchSection>
@@ -14,11 +26,12 @@ const Homepage = () => {
       </SearchSection>
       <ContentSection>
         <h1>Homepage</h1>
-        {routesConfig.map(route => (
+        <Ads name={name} categoryId={categoryId} price={price} />
+        {/* {routesConfig.map(route => (
           <Link key={route.path} to={route.path}>
             {route.path}
           </Link>
-        ))}
+        ))} */}
       </ContentSection>
     </DefaultLayout>
   );

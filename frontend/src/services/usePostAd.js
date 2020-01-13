@@ -24,6 +24,7 @@ const usePostAd = () => {
         setData(data);
         return data;
       } catch (error) {
+        setData(null);
         setError(error);
         throw error;
       } finally {
