@@ -33,6 +33,9 @@ const DefaultLayout = ({ children }) => {
   const registerHandler = useCallback(() => {
     history.push(routesPaths.REGISTER);
   }, [history]);
+  const addAdHandler = useCallback(() => {
+    history.push(routesPaths.NEW_AD);
+  }, [history]);
   const logoutHandler = useCallback(() => {
     history.push(routesPaths.LOGOUT);
   }, [history]);
@@ -51,6 +54,9 @@ const DefaultLayout = ({ children }) => {
             )}
             {shouldShowRegister && (
               <HeaderButton onClick={registerHandler}>Rejestracja</HeaderButton>
+            )}
+            {shouldShowLogout && (
+              <HeaderButton onClick={addAdHandler}>Dodaj +</HeaderButton>
             )}
             {shouldShowLogout && (
               <HeaderButton onClick={logoutHandler}>Wyloguj</HeaderButton>

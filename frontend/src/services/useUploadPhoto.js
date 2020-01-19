@@ -1,25 +1,20 @@
 import { useCallback, useState } from "react";
 import useWretch from "./useWretch";
 
-const usePostAd = () => {
+const useUploadPhoto = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const wretch = useWretch();
 
-  const postAd = useCallback(
-    async ({ price, title, categoryId, photos, description }) => {
+  const uploadPhoto = useCallback(
+    async ({ photo }) => {
       setLoading(true);
       try {
         const data = await wretch
-          .url("/ad")
-          .post({
-            price: parseFloat(price),
-            title,
-            categoryId: categoryId.toString(),
-            photos,
-            description,
-          })
+          .url("/upload")
+          .formData({ files: photo })
+          .post()
           .json();
         setData(data);
         return data;
@@ -34,7 +29,7 @@ const usePostAd = () => {
     [wretch],
   );
 
-  return [postAd, { data, error, loading }];
+  return [uploadPhoto, { data, error, loading }];
 };
 
-export default usePostAd;
+export default useUploadPhoto;

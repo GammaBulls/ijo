@@ -11,6 +11,7 @@ import LabelWrapper from "./LabelWrapper";
 import { ContentSection, ErrorWrapper, FormWrapper } from "./NewAd.components";
 import { MultiPhotoSelect } from "./PhotoSelect";
 import usePostAd from "../../services/usePostAd";
+import useUploadPhoto from "../../services/useUploadPhoto";
 
 const NewAd = () => {
   const [title, setTitle] = useInputState();
@@ -20,6 +21,7 @@ const NewAd = () => {
   const [description, setDescription] = useInputState();
   const [photos, setPhotos] = useState([]);
   const [postAd, { loading }] = usePostAd();
+  const [uploadPhoto] = useUploadPhoto();
 
   const validate = useCallback(
     async ({ title, categoryId, price, description }) => {
@@ -41,6 +43,17 @@ const NewAd = () => {
     },
     [categoriesOptions],
   );
+  const uploadPhotos = useCallback(
+    async photos =>
+      (
+        await Promise.all(
+          photos.filter(Boolean).map(photo => uploadPhoto({ photo })),
+        )
+      )
+        .map(data => data && data[0] && data[0].id)
+        .filter(Boolean),
+    [uploadPhoto],
+  );
 
   const [error, setError] = useState(null);
   const submitHandler = useCallback(
@@ -48,20 +61,29 @@ const NewAd = () => {
       e.preventDefault();
       const values = {
         title,
-        categoryId: category.value,
+        categoryId: category && category.value,
         price,
         description,
-        photos,
       };
       try {
         setError(null);
         await validate(values);
-        await postAd(values);
+        const photoLinks = await uploadPhotos(photos);
+        await postAd({ ...values, photos: photoLinks });
       } catch (e) {
         setError(e);
       }
     },
-    [category, description, photos, postAd, price, title, validate],
+    [
+      category,
+      description,
+      photos,
+      postAd,
+      price,
+      title,
+      uploadPhotos,
+      validate,
+    ],
   );
 
   return (
