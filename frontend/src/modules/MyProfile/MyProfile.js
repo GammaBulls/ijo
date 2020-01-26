@@ -5,6 +5,7 @@ import { routesPaths } from "../Routing/routesPaths";
 import DefaultLayout from "../shared/layouts/DefaultLayout";
 import MyAds from "./MyAds";
 import { ContentSection, StyledLink } from "./MyProfile.components";
+import MyFavorites from "./MyFavorites";
 
 const MyProfile = () => {
   const { page } = useParams();
@@ -14,6 +15,9 @@ const MyProfile = () => {
   switch (page) {
     case "ads":
       content = <MyAds />;
+      break;
+    case "favorite":
+      content = <MyFavorites />;
       break;
     default:
       content = (
