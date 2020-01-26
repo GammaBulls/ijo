@@ -4,14 +4,14 @@
   "description": "",
   "scripts": {
     "start:dev": "npm run-script up && npm run-script logs",
-    "start": "cd frontend/ && npm serve",
+    "start": "cd frontend/ && npm start",
     "up": "docker-compose up --build -d",
     "logs": "docker-compose logs -f",
     "down": "docker-compose down",
     "stop": "docker-compose stop",
     "install:all": "npm install && npm run-script install:frontend",
     "install:frontend": "cd frontend/ && npm install && cd ..",
-    "postinstall": "npm run-script install:frontend "
+    "postinstall": "npm run-script install:frontend"
   },
   "author": "",
   "license": "ISC",
