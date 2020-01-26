@@ -10,16 +10,19 @@ const useAuthorizedOnly = ({
   const { userInfo } = useAppContext();
   const history = useHistory();
 
+  const shouldRedirect =
+    !userInfo ||
+    (requireAdmin && !userInfo.is_admin) ||
+    (requireModerator && !userInfo.is_moderator);
+
   useEffect(() => {
     console.log(userInfo);
-    if (
-      !userInfo ||
-      (requireAdmin && !userInfo.is_admin) ||
-      (requireModerator && !userInfo.is_moderator)
-    ) {
+    if (shouldRedirect) {
       history.push(routesPaths.LOGIN);
     }
-  }, [history, requireAdmin, requireModerator, userInfo]);
+  }, [history, requireAdmin, requireModerator, shouldRedirect, userInfo]);
+
+  return shouldRedirect;
 };
 
 export default useAuthorizedOnly;

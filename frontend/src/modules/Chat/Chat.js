@@ -12,10 +12,14 @@ import Conversation from "./Conversation";
 import useAuthorizedOnly from "../../common/helpers/useAuthorizedOnly";
 
 const Chat = () => {
-  useAuthorizedOnly();
+  const unauth = useAuthorizedOnly();
   const { data } = useGetConversations();
 
   const hasMessages = !!(data && data.length);
+
+  if (unauth) {
+    return null;
+  }
 
   return (
     <DefaultLayout>

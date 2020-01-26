@@ -6,11 +6,19 @@ import DefaultLayout from "../shared/layouts/DefaultLayout";
 import MyAds from "./MyAds";
 import { ContentSection, StyledLink } from "./MyProfile.components";
 import MyFavorites from "./MyFavorites";
+import EditProfile from "./EditProfile";
+import useAuthorizedOnly from "../../common/helpers/useAuthorizedOnly";
 
 const MyProfile = () => {
+  const unauth = useAuthorizedOnly();
+
   const { page } = useParams();
   let content = null;
   const { userInfo } = useAppContext();
+
+  if (unauth) {
+    return null;
+  }
 
   switch (page) {
     case "ads":
@@ -18,6 +26,9 @@ const MyProfile = () => {
       break;
     case "favorite":
       content = <MyFavorites />;
+      break;
+    case "edit":
+      content = <EditProfile />;
       break;
     default:
       content = (
