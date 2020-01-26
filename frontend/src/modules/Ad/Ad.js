@@ -1,20 +1,22 @@
 import { formatDistanceToNow } from "date-fns";
 import { pl } from "date-fns/locale";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import useGetAd from "../../services/Ads/useGetAd";
-import DefaultLayout from "../shared/layouts/DefaultLayout";
-import { ContentSection } from "./Ad.components";
-import useGetCategories from "../../services/useGetCategories";
-import useCategoriesOptions from "../shared/hooks/useCategoriesOptions";
 import useGetAdPhotos from "../../services/Ads/useGetAdPhotos";
+import useGetAuthor from "../../services/Ads/useGetAuthor";
+import Button from "../shared/components/Button";
+import useCategoriesOptions from "../shared/hooks/useCategoriesOptions";
+import DefaultLayout from "../shared/layouts/DefaultLayout";
+import { Author, ContentSection, Info, Wrapper } from "./Ad.components";
 
 const Ad = () => {
   const { id } = useParams();
   const { data, error, loading } = useGetAd({ id });
   const [categories] = useCategoriesOptions();
 
-  const { data: photoData } = useGetAdPhotos({ id: id });
+  const { data: photoData } = useGetAdPhotos({ id });
+  const [getAuthor, { data: authorData }] = useGetAuthor();
 
   // eslint-disable-next-line no-unused-vars
   const photos = useMemo(() => {
@@ -23,6 +25,12 @@ const Ad = () => {
     }
     return photoData.map(v => v.link);
   }, [photoData]);
+
+  useEffect(() => {
+    if (data && data.id) {
+      getAuthor({ id: data.id });
+    }
+  }, [data, getAuthor]);
 
   if (loading) {
     return "Loading...";
@@ -44,12 +52,26 @@ const Ad = () => {
     <DefaultLayout>
       <ContentSection>
         <h2>{title}</h2>
-        <span>Kategoria: {category.label}</span>
-        <span>Utworzono: {formattedDate}</span>
-        <span>Cena: {price} PLN</span>
+        <Wrapper>
+          <Info>
+            <span>Kategoria: {category.label}</span>
+            <span>Utworzono: {formattedDate}</span>
+            <span>Cena: {price} PLN</span>
+          </Info>
+          <Author>
+            <span>
+              Ogloszenia zamieszczone przez: {authorData && authorData.name}
+            </span>
+            {authorData && (
+              <span>Numer telefonu: {authorData.phone_number || "ukryty"}</span>
+            )}
+            <Button>Chat z autorem</Button>
+          </Author>
+        </Wrapper>
+
         <br />
         {photos.map(link => (
-          <img src={link} key={link} />
+          <img src={link} key={link} alt="zdjecie" />
         ))}
         <h4>Opis:</h4>
         {description}

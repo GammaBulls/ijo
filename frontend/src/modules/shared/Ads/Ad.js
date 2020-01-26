@@ -19,6 +19,8 @@ import {
 } from "./Ad.components";
 import { useCategoriesContext } from "./CategoriesContext";
 import noPictures from "./no-pictures.svg";
+import useFavorite from "../../../services/Ads/useFavorite";
+import useUnFavorite from "../../../services/Ads/useUnFavorite";
 
 const Ad = ({
   data: {
@@ -34,9 +36,12 @@ const Ad = ({
     category: categoryId,
   },
   editable,
+  refresh,
 }) => {
   const history = useHistory();
   const categories = useCategoriesContext();
+  const [favorite] = useFavorite();
+  const [unfavorite] = useUnFavorite();
 
   const categoryName = useMemo(
     () =>
@@ -52,8 +57,7 @@ const Ad = ({
 
   const { data: photoData } = useGetAdPhotos({ id: id });
 
-  // eslint-disable-next-line no-unused-vars
-  const [mainPhoto, ...photos] = useMemo(() => {
+  const [mainPhoto] = useMemo(() => {
     if (!Array.isArray(photoData)) {
       return [];
     }
@@ -63,6 +67,15 @@ const Ad = ({
   const onEditClick = useCallback(() => {
     history.push(generatePath(routesPaths.AD_EDIT, { id }));
   }, [history, id]);
+
+  const onStarClick = useCallback(async () => {
+    if (is_favorite) {
+      await unfavorite({ id });
+    } else {
+      await favorite({ id });
+    }
+    refresh();
+  }, [favorite, id, is_favorite, refresh, unfavorite]);
 
   return (
     <Wrapper promoted={is_promoted}>
@@ -78,7 +91,7 @@ const Ad = ({
             {price} PLN
             {editable && <EditButton onClick={onEditClick}>Edytuj</EditButton>}
           </Price>
-          <FavoriteStar isFavorited={is_favorite} />
+          <FavoriteStar isFavorited={is_favorite} onClick={onStarClick} />
         </PriceWrapper>
       </Content>
     </Wrapper>

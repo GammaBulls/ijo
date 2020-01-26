@@ -14,3 +14,18 @@ export const ContentSection = styled(Section)`
   }
   padding-top: 20px;
 `;
+
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Author = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

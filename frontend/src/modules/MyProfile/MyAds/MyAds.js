@@ -18,9 +18,16 @@ const MyAds = () => {
         data
           .map(a => ({ ...a, start_date: new Date(a.start_date) }))
           .sort((a, b) => b.start_date - a.start_date)
-          .map(ad => <Ad key={ad.id} data={ad} editable={true} />)) ||
+          .map(ad => (
+            <Ad
+              key={ad.id}
+              data={ad}
+              editable={true}
+              refresh={() => getMyAds()}
+            />
+          ))) ||
       [],
-    [data],
+    [data, getMyAds],
   );
 
   if (error) return `Error: ${error}`;

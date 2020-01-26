@@ -18,9 +18,17 @@ const MyFavorites = () => {
         data
           .map(a => ({ ...a, start_date: new Date(a.start_date) }))
           .sort((a, b) => b.start_date - a.start_date)
-          .map(ad => <Ad key={ad.id} data={ad} />)) ||
+          .map(ad => (
+            <Ad
+              key={ad.id}
+              data={ad}
+              refresh={() => {
+                getMyFavorites();
+              }}
+            />
+          ))) ||
       [],
-    [data],
+    [data, getMyFavorites],
   );
 
   if (error) return `Error: ${error}`;

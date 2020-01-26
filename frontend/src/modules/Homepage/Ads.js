@@ -22,8 +22,16 @@ const Ads = ({ name, categoryId, priceMax, priceMin }) => {
             `${a.is_prmoted}${a.start_date}`,
           ),
         )
-        .map(ad => <Ad key={ad.id} data={ad} />),
-    [data],
+        .map(ad => (
+          <Ad
+            key={ad.id}
+            data={ad}
+            refresh={() => {
+              getAds({ name, categoryId, priceMax, priceMin });
+            }}
+          />
+        )),
+    [categoryId, data, getAds, name, priceMax, priceMin],
   );
 
   if (error) return `Error: ${error}`;
