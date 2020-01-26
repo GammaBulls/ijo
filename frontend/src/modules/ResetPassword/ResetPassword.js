@@ -3,7 +3,6 @@ import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import useInputState from "../../common/helpers/useInputState";
 import useQueryParameters from "../../common/helpers/useQueryParameters";
-import useUserToken from "../../common/helpers/useUserToken";
 import useResetPassword from "../../services/Login/useResetPassword";
 import useSetNewPassword from "../../services/Login/useSetNewPassword";
 import { routesPaths } from "../Routing/routesPaths";
@@ -19,7 +18,6 @@ import {
 
 const ResetPassword = () => {
   const [email, handleEmailChange] = useInputState();
-  const [, setUserToken] = useUserToken();
   const [resetPassword, { loading }] = useResetPassword();
   const [setNewPassword, { loadin: loading2 }] = useSetNewPassword();
   const params = useQueryParameters();
@@ -33,9 +31,10 @@ const ResetPassword = () => {
       e.preventDefault();
       try {
         if (resetState === "reset") {
-          const { access_token } = await resetPassword({ email });
-          setUserToken(access_token);
-          toast.success("Sprawdź email!");
+          const { message: msg } = await resetPassword({ email });
+          if (msg === "email sent") {
+            toast.success("Sprawdź email!");
+          }
         } else {
           await setNewPassword({ resetToken: token, newPassword: email });
           history.push(routesPaths.LOGIN);
@@ -45,15 +44,7 @@ const ResetPassword = () => {
         toast.error(error.message);
       }
     },
-    [
-      email,
-      history,
-      resetPassword,
-      resetState,
-      setNewPassword,
-      setUserToken,
-      token,
-    ],
+    [email, history, resetPassword, resetState, setNewPassword, token],
   );
 
   const actions = useMemo(

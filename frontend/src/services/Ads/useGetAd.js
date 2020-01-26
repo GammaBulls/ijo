@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useWretch from "./useWretch";
+import useWretch from "../useWretch";
 
 const useGetAd = ({ skip, id } = {}) => {
   const [data, setData] = useState(null);

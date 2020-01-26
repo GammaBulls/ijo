@@ -12,13 +12,14 @@ services:
       JWT_SECRET: tu_podaj_secret
       DATABASE_URL: sqlite:///./db.sqlite
       PORT: 8000
+      FRONT: "http://localhost:3000/"
   frontend:
     container_name: ijo-frontend
     build: ./frontend
     environment:
-      PORT: 3000
       CHOKIDAR_USEPOLLING: 1
       CHOKIDAR_POLLINTERVAL: 3000
+      PORT: 3000
       NODE_ENV: development
       REACT_APP_API_URL: http://localhost:8000/api
     ports:

@@ -9,22 +9,23 @@ import AppContext from "./AppContext";
 import Loading from "./Loading";
 
 const App = () => {
-  const [appData, setAppData] = useState({ userInfo: null });
+  const [appData, setAppData] = useState({ userInfo: null, update: () => {} });
   const [userToken] = useUserToken();
   const [getMe] = useLazyGetMe();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const handler = async () => {
+    const updateHandler = async () => {
+      setReady(false);
       if (!userToken) {
         setReady(true);
-        return setAppData({ userInfo: null });
+        return setAppData({ userInfo: null, update: updateHandler });
       }
       const data = await getMe();
-      setAppData({ userInfo: data });
+      setAppData({ userInfo: data, update: updateHandler });
       setReady(true);
     };
-    handler();
+    updateHandler();
   }, [getMe, userToken]);
 
   return (

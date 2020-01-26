@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useHistory, useRouteMatch } from "react-router";
+import { useHistory, useRouteMatch, generatePath } from "react-router";
 import { useAppContext } from "../../../App/AppContext";
 import { routesPaths } from "../../../Routing/routesPaths";
 import {
@@ -23,6 +23,8 @@ const DefaultLayout = ({ children }) => {
 
   const shouldShowLogin = !userInfo && !matchLogin && !matchRegister;
   const shouldShowRegister = shouldShowLogin;
+  const shouldShowAdd = !!userInfo;
+  const shouldShowMe = !!userInfo;
   const shouldShowLogout = !!userInfo;
 
   const history = useHistory();
@@ -35,6 +37,9 @@ const DefaultLayout = ({ children }) => {
   }, [history]);
   const addAdHandler = useCallback(() => {
     history.push(routesPaths.NEW_AD);
+  }, [history]);
+  const meHandler = useCallback(() => {
+    history.push(generatePath(routesPaths.MY_PROFILE));
   }, [history]);
   const logoutHandler = useCallback(() => {
     history.push(routesPaths.LOGOUT);
@@ -55,8 +60,11 @@ const DefaultLayout = ({ children }) => {
             {shouldShowRegister && (
               <HeaderButton onClick={registerHandler}>Rejestracja</HeaderButton>
             )}
-            {shouldShowLogout && (
+            {shouldShowAdd && (
               <HeaderButton onClick={addAdHandler}>Dodaj +</HeaderButton>
+            )}
+            {shouldShowMe && (
+              <HeaderButton onClick={meHandler}>Mój profil</HeaderButton>
             )}
             {shouldShowLogout && (
               <HeaderButton onClick={logoutHandler}>Wyloguj</HeaderButton>

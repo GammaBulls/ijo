@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import colors from "../../shared/styles/colors";
+import styled, { css } from "styled-components";
+import colors from "../styles/colors";
+import Button from "../components/Button";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -11,6 +12,12 @@ export const Wrapper = styled.div`
 
   border: thin solid #ccc;
   border-radius: 4px;
+
+  ${p =>
+    p.promoted &&
+    css`
+      background: rgba(250, 250, 190, 0.5);
+    `}
 `;
 
 export const Image = styled.img`
@@ -89,4 +96,9 @@ export const FavoriteStar = styled.span.attrs({
     rgb(0, 0, 0) 1.92034px -0.558831px 0px;
 
   color: ${p => (p.isFavorited ? "yellow" : "white")};
+`;
+
+export const EditButton = styled(Button)`
+  min-width: fit-content;
+  margin-left: 10px;
 `;

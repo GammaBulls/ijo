@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
-import Ads from "./Ads";
+import Ads from "../shared/Ads";
 import {
   ContentSection,
   SearchSection,
@@ -17,10 +17,7 @@ const Homepage = () => {
   const [priceMin, setPriceMin] = useInputState();
   const [priceMax, setPriceMax] = useInputState();
 
-  const {
-    data: categories,
-    loading: categoriesLoading,
-  } = useCategoriesOptions();
+  const [categories, categoriesLoading] = useCategoriesOptions();
 
   return (
     <DefaultLayout>
@@ -32,6 +29,8 @@ const Homepage = () => {
         <SearchBox>
           <span>Kategoria</span>
           <Select
+            isClearable={true}
+            isSearchable={true}
             value={category}
             onChange={setCategory}
             options={categories}

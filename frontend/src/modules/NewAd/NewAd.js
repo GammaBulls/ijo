@@ -10,7 +10,7 @@ import FormSection from "./FormSection";
 import LabelWrapper from "./LabelWrapper";
 import { ContentSection, ErrorWrapper, FormWrapper } from "./NewAd.components";
 import { MultiPhotoSelect } from "./PhotoSelect";
-import usePostAd from "../../services/usePostAd";
+import usePostAd from "../../services/Ads/usePostAd";
 import useUploadPhoto from "../../services/useUploadPhoto";
 
 const NewAd = () => {

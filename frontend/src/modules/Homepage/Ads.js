@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from "react";
-import useGetAds from "../../../services/useGetAds";
-import Ad from "./Ad";
-import CategoriesContext from "./CategoriesContext";
-import useGetCategories from "../../../services/useGetCategories";
+import useGetAds from "../../services/Ads/useGetAds";
+import useGetCategories from "../../services/useGetCategories";
+import Ad from "../shared/Ads/Ad";
+import CategoriesContext from "../shared/Ads/CategoriesContext";
 
 const Ads = ({ name, categoryId, priceMax, priceMin }) => {
   const [getAds, { data, error }] = useGetAds();
@@ -17,7 +17,7 @@ const Ads = ({ name, categoryId, priceMax, priceMin }) => {
       data &&
       data
         .map(a => ({ ...a, start_date: new Date(a.start_date) }))
-        .sort((a, b) => b.start_date - a.start_date)
+        .sort((a, b) => (a.is_promoted ? -1 : b.start_date - a.start_date))
         .map(ad => <Ad key={ad.id} data={ad} />),
     [data],
   );

@@ -2,7 +2,7 @@ import { formatDistanceToNow } from "date-fns";
 import { pl } from "date-fns/locale";
 import React from "react";
 import { useParams } from "react-router";
-import useGetAd from "../../services/useGetAd";
+import useGetAd from "../../services/Ads/useGetAd";
 import DefaultLayout from "../shared/layouts/DefaultLayout";
 import { ContentSection } from "./Ad.components";
 

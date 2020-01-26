@@ -9,10 +9,10 @@ const INDICATOR = `${PREFIX}__dropdown-indicator`;
 const Select = styled(ReactSelect).attrs({
   classNamePrefix: PREFIX,
 })`
-  width: 320px;
+  width: 280px;
 
   .${CONTROL} {
-    width: 320px;
+    width: 280px;
     border: thin solid #ccc;
     border-radius: 5px;
     min-height: 34px;
