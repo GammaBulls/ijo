@@ -17,7 +17,11 @@ const Ads = ({ name, categoryId, priceMax, priceMin }) => {
       data &&
       data
         .map(a => ({ ...a, start_date: new Date(a.start_date) }))
-        .sort((a, b) => (a.is_promoted ? -1 : b.start_date - a.start_date))
+        .sort((a, b) =>
+          `${b.is_prmoted}${b.start_date}`.localeCompare(
+            `${a.is_prmoted}${a.start_date}`,
+          ),
+        )
         .map(ad => <Ad key={ad.id} data={ad} />),
     [data],
   );
