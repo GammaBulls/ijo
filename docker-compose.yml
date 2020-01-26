@@ -8,6 +8,10 @@ services:
       - "8000:8000"
     volumes:
       - "./backend/app:/app:cached"
+    environment:
+      JWT_SECRET: tu_podaj_secret
+      DATABASE_UR: sqlite:///./db.sqlite
+      PORT: 8000
   frontend:
     container_name: ijo-frontend
     build: ./frontend

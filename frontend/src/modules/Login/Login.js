@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import useInputState from "../../common/helpers/useInputState";
@@ -14,6 +14,7 @@ import {
   SubmitButton,
   Subtext,
 } from "./Login.components";
+import useQueryParameters from "../../common/helpers/useQueryParameters";
 
 const Login = () => {
   const [email, handleEmailChange] = useInputState();
@@ -21,6 +22,14 @@ const Login = () => {
   const [login, { loading }] = useLogin();
   const history = useHistory();
   const [, setUserToken] = useUserToken();
+  const params = useQueryParameters();
+
+  useEffect(() => {
+    if (params.get("success") === "true") {
+      toast.success("Aktywowano konto");
+      history.replace(routesPaths.LOGIN);
+    }
+  }, [history, params]);
 
   const handleSubmit = useCallback(
     async e => {

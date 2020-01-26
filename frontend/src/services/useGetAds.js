@@ -8,12 +8,17 @@ const useGetAds = () => {
   const wretch = useWretch();
 
   const getAds = useCallback(
-    async ({ categoryId, name, price }) => {
+    async ({ categoryId, name, priceMax, priceMin }) => {
       setLoading(true);
       try {
         const data = await wretch
           .url("/ad")
-          .query({ categoryId, name, price })
+          .query({
+            ...(categoryId && { categoryId }),
+            ...(name && { name }),
+            ...(priceMax && { priceMax }),
+            ...(priceMin && { priceMin }),
+          })
           .get()
           .json();
         setData(data);

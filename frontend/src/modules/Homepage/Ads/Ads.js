@@ -4,13 +4,13 @@ import Ad from "./Ad";
 import CategoriesContext from "./CategoriesContext";
 import useGetCategories from "../../../services/useGetCategories";
 
-const Ads = ({ name, categoryId, price }) => {
+const Ads = ({ name, categoryId, priceMax, priceMin }) => {
   const [getAds, { data, error }] = useGetAds();
   const { data: categoiresData } = useGetCategories();
 
   useEffect(() => {
-    getAds({ name, categoryId, price });
-  }, [categoryId, getAds, name, price]);
+    getAds({ name, categoryId, priceMax, priceMin });
+  }, [categoryId, getAds, name, priceMax, priceMin]);
 
   const innerAds = useMemo(
     () =>

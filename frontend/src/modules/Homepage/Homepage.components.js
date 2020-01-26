@@ -9,6 +9,11 @@ import colors from "../shared/styles/colors";
 export const SearchSection = styled(Section)`
   border-bottom: 1px solid ${colors.defaultBorder};
   margin-top: ${FIRST_SECTION_MARGIN}px;
+
+  ${WidthWrapper} {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const ContentSection = styled(Section)`
@@ -20,4 +25,12 @@ export const ContentSection = styled(Section)`
     display: flex;
     flex-direction: column;
   }
+`;
+
+export const SearchBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 5px;
+  flex-shrink: 1;
+  flex-grow: 1;
 `;
