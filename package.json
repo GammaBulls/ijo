@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run-script up && npm run-script logs",
+    "start:dev": "npm run-script up && npm run-script logs",
+    "start": "cd frontend/ && npm serve",
     "up": "docker-compose up --build -d",
     "logs": "docker-compose logs -f",
     "down": "docker-compose down",
     "stop": "docker-compose stop",
-    "install:all": "npm install && cd frontend/ && npm install"
+    "install:all": "npm install && npm run-script install:frontend",
+    "install:frontend": "cd frontend/ && npm install && cd ..",
+    "postinstall": "npm run-script install:frontend "
   },
   "author": "",
   "license": "ISC",
