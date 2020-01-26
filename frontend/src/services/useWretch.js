@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import { toast } from "react-toastify";
 import Wretch from "wretch";
 import useUserToken from "../common/helpers/useUserToken";
-
-const API_URL = "http://localhost:8000/api";
+import { API_URL } from "../config/baseUrls";
 
 const useWretch = (authorized = true) => {
   const [userToken, setUserToken] = useUserToken();
