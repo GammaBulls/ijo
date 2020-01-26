@@ -27,8 +27,8 @@ const Ad = () => {
   }, [photoData]);
 
   useEffect(() => {
-    if (data && data.id) {
-      getAuthor({ id: data.id });
+    if (data && data.owner) {
+      getAuthor({ id: data.owner });
     }
   }, [data, getAuthor]);
 
