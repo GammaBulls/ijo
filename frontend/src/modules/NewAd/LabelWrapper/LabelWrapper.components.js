@@ -15,6 +15,7 @@ export const Label = styled.span`
   width: 200px;
   text-align: right;
   margin-right: 20px;
+  position: relative;
 `;
 
 export const Wrapper = styled.div`
