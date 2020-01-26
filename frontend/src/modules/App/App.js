@@ -11,15 +11,18 @@ import Loading from "./Loading";
 const App = () => {
   const [appData, setAppData] = useState({ userInfo: null });
   const [userToken] = useUserToken();
-  const [getMe, { loading }] = useLazyGetMe();
+  const [getMe] = useLazyGetMe();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const handler = async () => {
       if (!userToken) {
+        setReady(true);
         return setAppData({ userInfo: null });
       }
       const data = await getMe();
       setAppData({ userInfo: data });
+      setReady(true);
     };
     handler();
   }, [getMe, userToken]);
@@ -27,8 +30,8 @@ const App = () => {
   return (
     <AppContext.Provider value={appData}>
       <GlobalStyle />
-      {loading && <Loading />}
-      {!loading && (
+      {!ready && <Loading />}
+      {ready && (
         <Suspense fallback={<Loading />}>
           <Switch>
             {routes}

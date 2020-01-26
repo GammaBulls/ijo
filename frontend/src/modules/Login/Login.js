@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import useInputState from "../../common/helpers/useInputState";
 import useUserToken from "../../common/helpers/useUserToken";
-import useLogin from "../../services/useLogin";
+import useLogin from "../../services/Login/useLogin";
 import { routesPaths } from "../Routing/routesPaths";
 import Box from "../shared/components/Box";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";

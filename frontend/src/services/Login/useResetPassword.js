@@ -1,21 +1,28 @@
 import { useCallback, useState } from "react";
-import useWretch from "./useWretch";
+import useWretch from "../useWretch";
 
-const useRegister = () => {
+const useResetPassword = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const wretch = useWretch(false);
 
-  const register = useCallback(
-    async ({ name, email, phone, password }) => {
+  // const verify = useCallback(({ message }) => {
+  //   if (message.startsWith("Logged in as ")) {
+  //     return true;
+  //   }
+  //   throw new Error(`Unsuccessful login: ${message}`);
+  // }, []);
+
+  const resetPassword = useCallback(
+    async ({ email }) => {
       setLoading(true);
       try {
         const data = await wretch
-          .url("/user")
-          .post({ name, email, phone, password, showPhone: true })
+          .url("/reset-password")
+          .post({ email })
           .json();
-        //TODO: verify(data);
+        // verify(data);
         setData(data);
         return data;
       } catch (error) {
@@ -29,7 +36,7 @@ const useRegister = () => {
     [wretch],
   );
 
-  return [register, { data, error, loading }];
+  return [resetPassword, { data, error, loading }];
 };
 
-export default useRegister;
+export default useResetPassword;

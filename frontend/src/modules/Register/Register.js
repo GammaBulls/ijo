@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { toast } from "react-toastify";
 import useInputState from "../../common/helpers/useInputState";
-import useRegister from "../../services/useRegister";
+import useRegister from "../../services/Login/useRegister";
 import { routesPaths } from "../Routing/routesPaths";
 import Box from "../shared/components/Box";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
