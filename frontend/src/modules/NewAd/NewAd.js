@@ -12,6 +12,8 @@ import { ContentSection, ErrorWrapper, FormWrapper } from "./NewAd.components";
 import { MultiPhotoSelect } from "./PhotoSelect";
 import usePostAd from "../../services/Ads/usePostAd";
 import useUploadPhoto from "../../services/useUploadPhoto";
+import { useHistory, generatePath } from "react-router";
+import { routesPaths } from "../Routing/routesPaths";
 
 const NewAd = () => {
   const [title, setTitle] = useInputState();
@@ -22,6 +24,7 @@ const NewAd = () => {
   const [photos, setPhotos] = useState([]);
   const [postAd, { loading }] = usePostAd();
   const [uploadPhoto] = useUploadPhoto();
+  const history = useHistory();
 
   const validate = useCallback(
     async ({ title, categoryId, price, description }) => {
@@ -69,7 +72,8 @@ const NewAd = () => {
         setError(null);
         await validate(values);
         const photoLinks = await uploadPhotos(photos);
-        await postAd({ ...values, photos: photoLinks });
+        const newAd = await postAd({ ...values, photos: photoLinks });
+        history.push(generatePath(routesPaths.AD, { id: newAd.id }));
       } catch (e) {
         setError(e);
       }
@@ -77,6 +81,7 @@ const NewAd = () => {
     [
       category,
       description,
+      history,
       photos,
       postAd,
       price,

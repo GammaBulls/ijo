@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import useWretch from "./useWretch";
+import useWretch from "../useWretch";
 
 const useUpdateMe = () => {
   const [data, setData] = useState(null);

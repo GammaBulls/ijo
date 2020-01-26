@@ -1,8 +1,8 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
 import useUserToken from "../../common/helpers/useUserToken";
-import useLazyGetMe from "../../services/useLazyGetMe";
+import useLazyGetMe from "../../services/Me/useLazyGetMe";
 import routes from "../Routing/routes";
 import GlobalStyle from "../shared/styles/globalStyle";
 import AppContext from "./AppContext";
@@ -28,6 +28,8 @@ const App = () => {
     updateHandler();
   }, [getMe, userToken]);
 
+  const showDelete = !!(appData.userInfo && appData.userInfo.delete_date);
+
   return (
     <AppContext.Provider value={appData}>
       <GlobalStyle />
@@ -35,7 +37,10 @@ const App = () => {
       {ready && (
         <Suspense fallback={<Loading />}>
           <Switch>
-            {routes}
+            {showDelete && (
+              <Route component={lazy(() => import("../DeletedUser"))} />
+            )}
+            {!showDelete && routes}
             <Route>404 page not found</Route>
           </Switch>
         </Suspense>

@@ -1,18 +1,18 @@
 import { useCallback, useState } from "react";
-import useWretch from "./useWretch";
+import useWretch from "../useWretch";
 
-const useGetMe = () => {
+const useCancelDelete = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const wretch = useWretch();
 
-  const getMe = useCallback(async () => {
+  const cancelDelete = useCallback(async () => {
     setLoading(true);
     try {
       const data = await wretch
-        .url("/me")
-        .get()
+        .url("/me/cancel-delete")
+        .post()
         .json();
       setData(data);
       return data;
@@ -25,7 +25,7 @@ const useGetMe = () => {
     }
   }, [wretch]);
 
-  return [getMe, { data, error, loading }];
+  return [cancelDelete, { data, error, loading }];
 };
 
-export default useGetMe;
+export default useCancelDelete;

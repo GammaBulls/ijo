@@ -4,7 +4,7 @@ import { Wrapper } from "./EditProfile.components";
 import { useAppContext } from "../../App/AppContext";
 import useInputState from "../../../common/helpers/useInputState";
 import Button from "../../shared/components/Button";
-import useUpdateMe from "../../../services/useUpdateMe";
+import useUpdateMe from "../../../services/Me/useUpdateMe";
 import { toast } from "react-toastify";
 
 const EditProfile = () => {

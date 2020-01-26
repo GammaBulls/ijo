@@ -8,6 +8,7 @@ import { ContentSection, StyledLink } from "./MyProfile.components";
 import MyFavorites from "./MyFavorites";
 import EditProfile from "./EditProfile";
 import useAuthorizedOnly from "../../common/helpers/useAuthorizedOnly";
+import DeleteProfile from "./DeleteProfile";
 
 const MyProfile = () => {
   const unauth = useAuthorizedOnly();
@@ -30,6 +31,9 @@ const MyProfile = () => {
     case "edit":
       content = <EditProfile />;
       break;
+    case "delete":
+      content = <DeleteProfile />;
+      break;
     default:
       content = (
         <>
@@ -41,7 +45,7 @@ const MyProfile = () => {
             <StyledLink
               to={generatePath(routesPaths.MY_PROFILE, { page: "ads" })}
             >
-              Moje ołoszenia
+              Moje ogłoszenia
             </StyledLink>
             <br />
             <StyledLink
