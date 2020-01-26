@@ -10,7 +10,7 @@
     "down": "docker-compose down",
     "stop": "docker-compose stop",
     "install:all": "npm install && npm run-script install:frontend",
-    "install:frontend": "cd frontend/ && npm install && cd ..",
+    "install:frontend": "cd frontend/ && npm install && sed -i \"s|'ws'|'wss'|\" ./node_modules/react-dev-utils/webpackHotDevClient.js && cd ..",
     "postinstall": "npm run-script install:frontend"
   },
   "author": "",
