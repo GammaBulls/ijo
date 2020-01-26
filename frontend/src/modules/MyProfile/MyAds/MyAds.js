@@ -24,6 +24,7 @@ const MyAds = () => {
               data={ad}
               editable={true}
               refresh={() => getMyAds()}
+              gray={true}
             />
           ))) ||
       [],

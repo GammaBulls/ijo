@@ -44,6 +44,11 @@ export const routesConfig = [
     importComponent: () => import("../Ad"),
   },
   {
+    path: routesPaths.AD_EDIT,
+    exact: true,
+    importComponent: () => import("../AdEdit"),
+  },
+  {
     path: routesPaths.CHAT,
     exact: true,
     importComponent: () => import("../Chat"),

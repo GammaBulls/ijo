@@ -42,6 +42,10 @@ const MyProfile = () => {
           </h3>
           <span>Aby przejść dalej, skorzystaj z poniższych linków:</span>
           <div>
+            <StyledLink to={generatePath(routesPaths.CHAT)}>
+              Moje wiadomości
+            </StyledLink>
+            <br />
             <StyledLink
               to={generatePath(routesPaths.MY_PROFILE, { page: "ads" })}
             >

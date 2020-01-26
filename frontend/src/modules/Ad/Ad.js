@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { pl } from "date-fns/locale";
-import React, { useEffect, useMemo } from "react";
-import { useParams } from "react-router";
+import React, { useEffect, useMemo, useCallback } from "react";
+import { useParams, useHistory, generatePath } from "react-router";
 import useGetAd from "../../services/Ads/useGetAd";
 import useGetAdPhotos from "../../services/Ads/useGetAdPhotos";
 import useGetAuthor from "../../services/Ads/useGetAuthor";
@@ -9,11 +9,15 @@ import Button from "../shared/components/Button";
 import useCategoriesOptions from "../shared/hooks/useCategoriesOptions";
 import DefaultLayout from "../shared/layouts/DefaultLayout";
 import { Author, ContentSection, Info, Wrapper } from "./Ad.components";
+import useStartConv from "../../services/Chat/useStartConv";
+import { toast } from "react-toastify";
+import { routesPaths } from "../Routing/routesPaths";
 
 const Ad = () => {
   const { id } = useParams();
   const { data, error, loading } = useGetAd({ id });
   const [categories] = useCategoriesOptions();
+  const history = useHistory();
 
   const { data: photoData } = useGetAdPhotos({ id });
   const [getAuthor, { data: authorData }] = useGetAuthor();
@@ -31,6 +35,17 @@ const Ad = () => {
       getAuthor({ id: data.owner });
     }
   }, [data, getAuthor]);
+
+  const [startConv] = useStartConv();
+
+  const onAuthorClick = useCallback(async () => {
+    try {
+      const conv = await startConv({ id: data.owner });
+      history.push(generatePath(routesPaths.CHAT, { conversationId: conv.id }));
+    } catch (e) {
+      toast.error("Wystąpił błąd");
+    }
+  }, [data, history, startConv]);
 
   if (loading) {
     return "Loading...";
@@ -65,7 +80,7 @@ const Ad = () => {
             {authorData && (
               <span>Numer telefonu: {authorData.phone_number || "ukryty"}</span>
             )}
-            <Button>Chat z autorem</Button>
+            <Button onClick={onAuthorClick}>Chat z autorem</Button>
           </Author>
         </Wrapper>
 

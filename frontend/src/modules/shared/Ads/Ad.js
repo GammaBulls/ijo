@@ -40,6 +40,7 @@ const Ad = ({
   },
   editable,
   refresh,
+  gray,
 }) => {
   const history = useHistory();
   const categories = useCategoriesContext();
@@ -110,7 +111,7 @@ const Ad = ({
   }, [favorite, id, is_favorite, refresh, unfavorite]);
 
   return (
-    <Wrapper promoted={is_promoted}>
+    <Wrapper promoted={is_promoted} gray={gray && !!end_reason}>
       <Image src={mainPhoto || noPictures} />
       <Content>
         <InfoWrapper>

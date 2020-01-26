@@ -18,6 +18,17 @@ export const Wrapper = styled.div`
     css`
       background: rgba(250, 250, 190, 0.5);
     `}
+  ${p =>
+    p.gray &&
+    css`
+      background: repeating-linear-gradient(
+        45deg,
+        #aaa,
+        #ccc 10px,
+        #ccc 10px,
+        #aaa 20px
+      );
+    `}
 `;
 
 export const Image = styled.img`

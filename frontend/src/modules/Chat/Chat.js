@@ -1,21 +1,14 @@
 import React from "react";
-import DefaultLayout from "../shared/layouts/DefaultLayout";
-import {
-  ContentSection,
-  Header,
-  Title,
-  Description,
-  Conversations,
-} from "./Chat.components";
-import useGetConversations from "../../services/Chat/useGetConversations";
-import Conversation from "./Conversation";
+import { useParams } from "react-router";
 import useAuthorizedOnly from "../../common/helpers/useAuthorizedOnly";
+import DefaultLayout from "../shared/layouts/DefaultLayout";
+import All from "./All";
+import { ContentSection } from "./Chat.components";
+import SingleConversation from "./SingleConversation";
 
 const Chat = () => {
   const unauth = useAuthorizedOnly();
-  const { data } = useGetConversations();
-
-  const hasMessages = !!(data && data.length);
+  const { conversationId } = useParams();
 
   if (unauth) {
     return null;
@@ -24,17 +17,8 @@ const Chat = () => {
   return (
     <DefaultLayout>
       <ContentSection>
-        <Header>
-          <Title>Wiadomości</Title>
-          <Description>Konwersacje z użytkownikami portalu</Description>
-        </Header>
-        <Conversations>
-          {hasMessages &&
-            data.map((conversationData, i) => (
-              <Conversation key={i} data={conversationData} />
-            ))}
-          {!hasMessages && "Brak wiadomości"}
-        </Conversations>
+        {!conversationId && <All />}
+        {conversationId && <SingleConversation />}
       </ContentSection>
     </DefaultLayout>
   );

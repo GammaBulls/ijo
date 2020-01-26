@@ -25,6 +25,7 @@ const MyFavorites = () => {
               refresh={() => {
                 getMyFavorites();
               }}
+              gray={true}
             />
           ))) ||
       [],
