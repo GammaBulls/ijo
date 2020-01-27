@@ -1,81 +1,47 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import useAuthorizedOnly from "../../common/helpers/useAuthorizedOnly";
+import Button from "../shared/components/Button";
 import DefaultLayout from "../shared/layouts/DefaultLayout/DefaultLayout";
 import { ContentSection } from "./Admin.components";
-import useAuthorizedOnly from "../../common/helpers/useAuthorizedOnly";
-import useCategoriesOptions from "../shared/hooks/useCategoriesOptions";
-import Button from "../shared/components/Button";
-import useGetCategories from "../../services/useGetCategories";
-import Input from "../shared/components/Input";
-import useInputState from "../../common/helpers/useInputState";
-import { toast } from "react-toastify";
-import useAddCategory from "../../services/Admin/useAddCategory";
-import useDeleteCategory from "../../services/Admin/useDeleteCategory";
+import Categories from "./Categories";
+import Users from "./Users";
 
 const Admin = () => {
   const unAuth = useAuthorizedOnly({ requireAdmin: true });
-  const [random, setRandom] = useState(Math.random());
-  const { data, loading } = useGetCategories({ random });
+  const [element, setElement] = useState(null);
 
-  const [newCategory, setNewCategory] = useInputState();
-
-  const [categories] = [
-    (data || []).map(({ id, category_name }) => ({
-      label: category_name,
-      value: id,
-    })),
-    loading,
-  ];
-  const [addCategory] = useAddCategory();
-  const [deleteCategory] = useDeleteCategory();
-
-  const submitNewCategory = useCallback(async () => {
-    try {
-      await addCategory({ name: newCategory });
-      setNewCategory({ target: { value: "" } });
-    } catch (e) {
-      toast.error(e.toString());
-    } finally {
-      setRandom(Math.random());
-    }
-  }, [addCategory, newCategory, setNewCategory]);
-
-  const deleteSomeCategory = useCallback(
-    id => async () => {
-      await deleteCategory({ id });
-      toast.success("Sukces");
-      setRandom(Math.random());
+  const onElement = useCallback(
+    element => () => {
+      setElement(element);
     },
-    [deleteCategory],
+    [],
   );
 
   if (unAuth) return null;
   return (
     <DefaultLayout>
       <ContentSection>
-        <h3>Zarządzanie kategoriami</h3>
-        <div style={{ display: "flex", marginBottom: 20 }}>
-          <Button
-            style={{ minWidth: 50, marginRight: 20 }}
-            onClick={submitNewCategory}
-          >
-            Dodaj
-          </Button>
-          <Input value={newCategory} onChange={setNewCategory} />
-        </div>
-        {categories.map((category, i) => (
-          <div key={i} style={{ marginBottom: 10 }}>
+        {!element && (
+          <>
+            <h3>Wybierz czym chcesz zarządzać</h3>
             <Button
-              style={{ minWidth: 30 }}
-              onClick={deleteSomeCategory(category.value)}
+              style={{ minWidth: 30, alignSelf: "flex-start" }}
+              onClick={onElement("categories")}
             >
-              Skasuj
+              Kategorie
             </Button>
-            <span style={{ marginLeft: 20, marginRight: 10 }}>
-              <b>{category.value}</b>
-            </span>
-            <span>{category.label}</span>
-          </div>
-        ))}
+            <Button
+              style={{ minWidth: 30, alignSelf: "flex-start", marginTop: 20 }}
+              onClick={onElement("mods")}
+            >
+              Moderatorzy
+            </Button>
+          </>
+        )}
+        {element === "categories" && (
+          <Categories back={() => setElement(null)} />
+        )}
+        {element === "mods" && <Users back={() => setElement(null)} />}
       </ContentSection>
     </DefaultLayout>
   );

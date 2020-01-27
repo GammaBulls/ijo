@@ -2,7 +2,12 @@ import { formatDistanceToNow } from "date-fns";
 import { pl } from "date-fns/locale";
 import React, { useCallback, useMemo, useState } from "react";
 import { generatePath, useHistory } from "react-router";
+import useDeleteAd from "../../../services/Ads/useDeleteAd";
+import useExtendAd from "../../../services/Ads/useExtendAd";
+import useFavorite from "../../../services/Ads/useFavorite";
 import useGetAdPhotos from "../../../services/Ads/useGetAdPhotos";
+import usePromoteAd from "../../../services/Ads/usePromoteAd";
+import useUnFavorite from "../../../services/Ads/useUnFavorite";
 import { routesPaths } from "../../Routing/routesPaths";
 import {
   Category,
@@ -19,12 +24,6 @@ import {
 } from "./Ad.components";
 import { useCategoriesContext } from "./CategoriesContext";
 import noPictures from "./no-pictures.svg";
-import useFavorite from "../../../services/Ads/useFavorite";
-import useUnFavorite from "../../../services/Ads/useUnFavorite";
-import useDeleteAd from "../../../services/Ads/useDeleteAd";
-import usePromoteAd from "../../../services/Ads/usePromoteAd";
-import useExtendAd from "../../../services/Ads/useExtendAd";
-import { useAppContext } from "../../App/AppContext";
 
 const Ad = ({
   data: {
