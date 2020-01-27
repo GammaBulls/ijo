@@ -15,6 +15,7 @@ const useDeleteCategory = () => {
           .url(`/admin/categories/${id}`)
           .delete()
           .json();
+        if (data.message) throw data;
         setData(data);
         return data;
       } catch (error) {
