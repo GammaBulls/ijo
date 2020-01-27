@@ -22,9 +22,7 @@ const Conversation = ({ data }) => {
   return (
     <Wrapper>
       <ChatBubble />
-      <Name
-        to={generatePath(routesPaths.CHAT, { conversationId: otherPerson })}
-      >
+      <Name to={generatePath(routesPaths.CHAT, { conversationId: data.id })}>
         {userData && userData.name}
       </Name>
     </Wrapper>
