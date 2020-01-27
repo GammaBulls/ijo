@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { pl } from "date-fns/locale";
-import React, { useEffect, useMemo, useCallback } from "react";
+import React, { useEffect, useMemo, useCallback, useState } from "react";
 import { useParams, useHistory, generatePath } from "react-router";
 import useGetAd from "../../services/Ads/useGetAd";
 import useGetAdPhotos from "../../services/Ads/useGetAdPhotos";
@@ -12,8 +12,11 @@ import { Author, ContentSection, Info, Wrapper } from "./Ad.components";
 import useStartConv from "../../services/Chat/useStartConv";
 import { toast } from "react-toastify";
 import { routesPaths } from "../Routing/routesPaths";
+import { useAppContext } from "../App/AppContext";
+import useReportAd from "../../services/Ads/useReportAd";
 
 const Ad = () => {
+  const { userInfo } = useAppContext();
   const { id } = useParams();
   const { data, error, loading } = useGetAd({ id });
   const [categories] = useCategoriesOptions();
@@ -47,6 +50,23 @@ const Ad = () => {
     }
   }, [data, history, startConv]);
 
+  const [reportAd] = useReportAd();
+
+  const [reporting, setReporting] = useState(false);
+
+  const onReportClick = useCallback(() => {
+    setReporting(true);
+  }, []);
+
+  const onRepClick = useCallback(
+    isScam => async () => {
+      await reportAd({ id, scam: isScam });
+      toast.success("Zgłoszono");
+      setReporting(false);
+    },
+    [id, reportAd],
+  );
+
   if (loading) {
     return "Loading...";
   }
@@ -72,6 +92,15 @@ const Ad = () => {
             <span>Kategoria: {category.label}</span>
             <span>Utworzono: {formattedDate}</span>
             <span>Cena: {price} PLN</span>
+            {!!userInfo && !reporting && (
+              <Button onClick={onReportClick}>Zgłoś</Button>
+            )}
+            {!!userInfo && reporting && (
+              <Button onClick={onRepClick(true)}>Oszustwo</Button>
+            )}
+            {!!userInfo && reporting && (
+              <Button onClick={onRepClick(false)}>Wulgaryzmy</Button>
+            )}
           </Info>
           <Author>
             <span>

@@ -27,6 +27,9 @@ const DefaultLayout = ({ children }) => {
   const shouldShowMe = !!userInfo;
   const shouldShowLogout = !!userInfo;
 
+  const shouldShowAdmin = !!userInfo && userInfo.is_admin;
+  const shouldShowMod = !!userInfo && userInfo.is_moderator;
+
   const history = useHistory();
 
   const loginHandler = useCallback(() => {
@@ -45,6 +48,13 @@ const DefaultLayout = ({ children }) => {
     history.push(routesPaths.LOGOUT);
   }, [history]);
 
+  const modHandler = useCallback(() => {
+    history.push(routesPaths.MOD);
+  }, [history]);
+  const adminHandler = useCallback(() => {
+    history.push(routesPaths.ADMIN);
+  }, [history]);
+
   return (
     <LayoutWrapper>
       <Header>
@@ -54,6 +64,12 @@ const DefaultLayout = ({ children }) => {
             <AppName>Ogloszenioofka</AppName>
           </AppBrandLink>
           <HeaderButtonWrapper>
+            {shouldShowAdmin && (
+              <HeaderButton onClick={adminHandler}>ADMIN</HeaderButton>
+            )}
+            {shouldShowMod && (
+              <HeaderButton onClick={modHandler}>MOD</HeaderButton>
+            )}
             {shouldShowLogin && (
               <HeaderButton onClick={loginHandler}>Logowanie</HeaderButton>
             )}

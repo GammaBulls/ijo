@@ -24,6 +24,7 @@ import useUnFavorite from "../../../services/Ads/useUnFavorite";
 import useDeleteAd from "../../../services/Ads/useDeleteAd";
 import usePromoteAd from "../../../services/Ads/usePromoteAd";
 import useExtendAd from "../../../services/Ads/useExtendAd";
+import { useAppContext } from "../../App/AppContext";
 
 const Ad = ({
   data: {

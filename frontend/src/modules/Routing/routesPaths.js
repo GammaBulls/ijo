@@ -9,4 +9,6 @@ export const routesPaths = {
   AD: "/ad/:id",
   AD_EDIT: "/ad/:id/edit",
   CHAT: "/chat/:conversationId?",
+  ADMIN: "/admin",
+  MOD: "/mod",
 };

@@ -1,5 +1,14 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import colors from "../shared/styles/colors";
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 export const LoadingC = styled.div`
   display: flex;
@@ -10,16 +19,7 @@ export const LoadingC = styled.div`
   border-bottom: 16px solid ${colors.brandColor};
   width: 120px;
   height: 120px;
-  animation: spin 2s linear infinite;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360);
-    }
-  }
+  animation: ${spin} 2s linear infinite;
 `;
 
 export default LoadingC;

@@ -53,6 +53,16 @@ export const routesConfig = [
     exact: true,
     importComponent: () => import("../Chat"),
   },
+  {
+    path: routesPaths.ADMIN,
+    exact: true,
+    importComponent: () => import("../Admin"),
+  },
+  {
+    path: routesPaths.MOD,
+    exact: true,
+    importComponent: () => import("../Mod"),
+  },
 ];
 
 const routes = routesConfig.map(({ importComponent, ...routeConfig }) => {

@@ -1,13 +1,14 @@
 import useWretch from "./useWretch";
 import { useState, useEffect } from "react";
 
-const useGetCategories = ({ skip } = {}) => {
+const useGetCategories = ({ skip, random } = {}) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(!skip);
   const wretch = useWretch(); //TODO: useWretch(false);
 
   useEffect(() => {
+    console.log(random);
     const execute = async () => {
       setLoading(true);
       try {
@@ -26,7 +27,7 @@ const useGetCategories = ({ skip } = {}) => {
     if (!skip) {
       execute();
     }
-  }, [skip, wretch]);
+  }, [random, skip, wretch]);
 
   return { data, error, loading };
 };
