@@ -8,9 +8,9 @@ const AdEdit = () => {
   const { id } = useParams();
 
   const { data } = useGetAd({ id });
-  const [categories] = useCategoriesOptions();
+  const [categories, loading] = useCategoriesOptions();
 
-  if (!data || !categories) {
+  if (!data || !categories || loading) {
     return null;
   }
   return <EditAd data={data} categories={categories} />;

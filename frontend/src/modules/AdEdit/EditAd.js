@@ -19,12 +19,15 @@ import {
 import { MultiPhotoSelect } from "../NewAd/./PhotoSelect";
 import useUpdateAd from "../../services/Ads/useUpdateAd";
 
-const EditAd = ({ data: initial }) => {
-  const [title, setTitle] = useInputState(initial.title);
-  const [categoriesOptions, categoriesLoading] = useCategoriesOptions();
-  const [category, setCategory] = useState(initial.category);
-  const [price, setPrice] = useInputState(initial.price);
-  const [description, setDescription] = useInputState(initial.description);
+const EditAd = ({ data: initial, categories: categoriesOptions }) => {
+  const [title, setTitle] = useInputState((initial.title || "").toString());
+  const [category, setCategory] = useState(
+    categoriesOptions.find(v => v.value == initial.category),
+  );
+  const [price, setPrice] = useInputState((initial.price || "").toString());
+  const [description, setDescription] = useInputState(
+    (initial.description || "").toString(),
+  );
   const [postUpdateAd, { loading }] = useUpdateAd();
   const history = useHistory();
 
@@ -72,7 +75,7 @@ const EditAd = ({ data: initial }) => {
       category,
       description,
       history,
-      initial.id,
+      initial,
       postUpdateAd,
       price,
       title,
@@ -93,7 +96,7 @@ const EditAd = ({ data: initial }) => {
                 value={category}
                 onChange={setCategory}
                 options={categoriesOptions}
-                isLoading={categoriesLoading}
+                isLoading={false}
               />
             </LabelWrapper>
             <LabelWrapper label="Podaj cenę" required={true}>
@@ -110,10 +113,9 @@ const EditAd = ({ data: initial }) => {
             <LabelWrapper label="Opis" required={true}>
               <TextArea value={description} onChange={setDescription} />
             </LabelWrapper>
-            <LabelWrapper label="Zdjęć nie można edytować"></LabelWrapper>
             <LabelWrapper>
-              <Button disabled={categoriesLoading || loading} type="submit">
-                Dodaj ogłoszenie
+              <Button disabled={false || loading} type="submit">
+                Aktualizuj ogłoszenie
               </Button>
             </LabelWrapper>
             {error && <ErrorWrapper>{error.message}</ErrorWrapper>}

@@ -18,6 +18,7 @@ const useUpdateAd = () => {
             title,
             categoryId: categoryId.toString(),
             description,
+            photos: [],
           })
           .json();
         setData(data);
