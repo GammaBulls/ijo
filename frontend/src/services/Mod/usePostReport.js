@@ -13,7 +13,7 @@ const usePostReport = () => {
       try {
         const data = await wretch
           .url(`/mod/reports/${id}`)
-          .post({ isOk, banUser })
+          .post({ is_ok: isOk, banUser })
           .json();
         setData(data);
         return data;
