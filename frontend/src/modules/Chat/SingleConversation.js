@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo, useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useParams } from "react-router";
-import useGetConv from "../../services/Chat/useGetConv";
-import { useAppContext } from "../App/AppContext";
-import useGetAuthor from "../../services/Ads/useGetAuthor";
-import Input from "../shared/components/Input";
-import styled from "styled-components";
-import Button from "../shared/components/Button";
-import useInputState from "../../common/helpers/useInputState";
-import useSendMsg from "../../services/Chat/useSendMsg";
 import { toast } from "react-toastify";
+import styled from "styled-components";
+import useInputState from "../../common/helpers/useInputState";
+import useGetConv from "../../services/Chat/useGetConv";
+import useSendMsg from "../../services/Chat/useSendMsg";
+import Button from "../shared/components/Button";
+import Input from "../shared/components/Input";
 import Message from "./Message";
 
 const Messages = styled.div`
@@ -71,8 +69,15 @@ const SingleConversation = () => {
         )}
       </Messages>
       <InputBox>
-        <Input placeholder="Wpisz wiadomość..." onChange={setMsg} value={msg} />
-        <Button onClick={submitHandler}>Wyślij</Button>
+        <Input
+          placeholder="Wpisz wiadomość..."
+          onChange={setMsg}
+          value={msg}
+          disabled={sendingMessage}
+        />
+        <Button onClick={submitHandler} disabled={sendingMessage}>
+          Wyślij
+        </Button>
       </InputBox>
     </>
   );
