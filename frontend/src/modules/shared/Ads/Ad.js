@@ -38,7 +38,7 @@ const Ad = ({
     title,
     category: categoryId,
   },
-  editable,
+  editable: xd,
   refresh,
   gray,
 }) => {
@@ -46,6 +46,8 @@ const Ad = ({
   const categories = useCategoriesContext();
   const [favorite] = useFavorite();
   const [unfavorite] = useUnFavorite();
+
+  const editable = xd && !end_reason;
 
   const categoryName = useMemo(
     () =>
