@@ -15,7 +15,7 @@ const useGetConv = () => {
           .url(`/chat/${id}`)
           .get()
           .json();
-        setData(data);
+        setData(data.reverse());
         return data;
       } catch (error) {
         setData(null);
