@@ -20,7 +20,7 @@ const useSetNewPassword = () => {
       try {
         const data = await wretch
           .url("/set-new-password")
-          .post({ resetToken, newPassword })
+          .post({ resetToken, password: newPassword })
           .json();
         // verify(data);
         setData(data);
