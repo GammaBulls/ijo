@@ -12,8 +12,8 @@ const useUpdateAd = () => {
       setLoading(true);
       try {
         const data = await wretch
-          .url("/ad")
-          .post({
+          .url(`/ad/${id}`)
+          .put({
             price: parseFloat(price),
             title,
             categoryId: categoryId.toString(),

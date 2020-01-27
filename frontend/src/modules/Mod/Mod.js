@@ -14,17 +14,17 @@ const Ad = ({ ad_id, reason }) => {
 
   const okHandler = useCallback(() => {
     postReport({ id: ad_id, isOk: true, banUser: false });
-    window.reload();
+    window.location.reload();
   }, [ad_id, postReport]);
 
   const deleteHandler = useCallback(() => {
     postReport({ id: ad_id, isOk: false, banUser: false });
-    window.reload();
+    window.location.reload();
   }, [ad_id, postReport]);
 
   const banHandler = useCallback(() => {
     postReport({ id: ad_id, isOk: false, banUser: true });
-    window.reload();
+    window.location.reload();
   }, [ad_id, postReport]);
 
   return (
