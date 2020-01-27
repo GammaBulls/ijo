@@ -1,29 +1,31 @@
 import React, { useCallback, useState } from "react";
-import useInputState from "../../common/helpers/useInputState";
-import Button from "../shared/components/Button";
-import Input from "../shared/components/Input";
-import Select from "../shared/components/Select";
-import TextArea from "../shared/components/TextArea";
-import useCategoriesOptions from "../shared/hooks/useCategoriesOptions";
-import DefaultLayout from "../shared/layouts/DefaultLayout";
-import FormSection from "./FormSection";
-import LabelWrapper from "./LabelWrapper";
-import { ContentSection, ErrorWrapper, FormWrapper } from "./NewAd.components";
-import { MultiPhotoSelect } from "./PhotoSelect";
-import usePostAd from "../../services/Ads/usePostAd";
-import useUploadPhoto from "../../services/useUploadPhoto";
-import { useHistory, generatePath } from "react-router";
-import { routesPaths } from "../Routing/routesPaths";
+import { generatePath, useHistory } from "react-router";
+import useInputState from "../NewAd/../../common/helpers/useInputState";
+import useUploadPhoto from "../NewAd/../../services/useUploadPhoto";
+import { routesPaths } from "../NewAd/../Routing/routesPaths";
+import Button from "../NewAd/../shared/components/Button";
+import Input from "../NewAd/../shared/components/Input";
+import Select from "../NewAd/../shared/components/Select";
+import TextArea from "../NewAd/../shared/components/TextArea";
+import useCategoriesOptions from "../NewAd/../shared/hooks/useCategoriesOptions";
+import DefaultLayout from "../NewAd/../shared/layouts/DefaultLayout";
+import FormSection from "../NewAd/./FormSection";
+import LabelWrapper from "../NewAd/./LabelWrapper";
+import {
+  ContentSection,
+  ErrorWrapper,
+  FormWrapper,
+} from "../NewAd/./NewAd.components";
+import { MultiPhotoSelect } from "../NewAd/./PhotoSelect";
+import useUpdateAd from "../../services/Ads/useUpdateAd";
 
-const EditAd = ({ initial }) => {
+const EditAd = ({ data: initial }) => {
   const [title, setTitle] = useInputState(initial.title);
   const [categoriesOptions, categoriesLoading] = useCategoriesOptions();
   const [category, setCategory] = useState(initial.category);
   const [price, setPrice] = useInputState(initial.price);
   const [description, setDescription] = useInputState(initial.description);
-  const [photos, setPhotos] = useState([]);
-  const [postAd, { loading }] = usePostAd();
-  const [uploadPhoto] = useUploadPhoto();
+  const [postUpdateAd, { loading }] = useUpdateAd();
   const history = useHistory();
 
   const validate = useCallback(
@@ -46,17 +48,6 @@ const EditAd = ({ initial }) => {
     },
     [categoriesOptions],
   );
-  const uploadPhotos = useCallback(
-    async photos =>
-      (
-        await Promise.all(
-          photos.filter(Boolean).map(photo => uploadPhoto({ photo })),
-        )
-      )
-        .map(data => data && data[0] && data[0].id)
-        .filter(Boolean),
-    [uploadPhoto],
-  );
 
   const [error, setError] = useState(null);
   const submitHandler = useCallback(
@@ -71,8 +62,7 @@ const EditAd = ({ initial }) => {
       try {
         setError(null);
         await validate(values);
-        const photoLinks = await uploadPhotos(photos);
-        const newAd = await postAd({ ...values, photos: photoLinks });
+        const newAd = await postUpdateAd(initial.id, { ...values });
         history.push(generatePath(routesPaths.AD, { id: newAd.id }));
       } catch (e) {
         setError(e);
@@ -82,11 +72,10 @@ const EditAd = ({ initial }) => {
       category,
       description,
       history,
-      photos,
-      postAd,
+      initial.id,
+      postUpdateAd,
       price,
       title,
-      uploadPhotos,
       validate,
     ],
   );
@@ -95,7 +84,7 @@ const EditAd = ({ initial }) => {
     <DefaultLayout>
       <ContentSection>
         <FormWrapper onSubmit={submitHandler}>
-          <FormSection title="Zaczynamy!">
+          <FormSection title="EDYCJA!">
             <LabelWrapper label="Wpisz tytuł" required={true}>
               <Input value={title} onChange={setTitle} />
             </LabelWrapper>
@@ -121,13 +110,7 @@ const EditAd = ({ initial }) => {
             <LabelWrapper label="Opis" required={true}>
               <TextArea value={description} onChange={setDescription} />
             </LabelWrapper>
-            <LabelWrapper label="Dodaj zdjęcia">
-              <MultiPhotoSelect
-                count={8}
-                photos={photos}
-                setPhotos={setPhotos}
-              />
-            </LabelWrapper>
+            <LabelWrapper label="Zdjęć nie można edytować"></LabelWrapper>
             <LabelWrapper>
               <Button disabled={categoriesLoading || loading} type="submit">
                 Dodaj ogłoszenie

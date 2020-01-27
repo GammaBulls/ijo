@@ -58,16 +58,7 @@ const Ad = ({ ad_id, reason }) => {
 const Mod = () => {
   const unAuth = useAuthorizedOnly({ requireModerator: true });
   const [getReports, { data }] = useGetReports();
-  const reports =
-    // data ||
-
-    [
-      { advertisement: 7, id: 5, report_reason: 1 },
-      { advertisement: 7, id: 4, report_reason: 1 },
-      { advertisement: 2, id: 3, report_reason: 1 },
-      { advertisement: 2, id: 2, report_reason: 1 },
-      { advertisement: 2, id: 1, report_reason: 1 },
-    ];
+  const reports = data || [];
 
   useEffect(() => {
     getReports();

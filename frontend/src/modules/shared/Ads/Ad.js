@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, addHours } from "date-fns";
 import { pl } from "date-fns/locale";
 import React, { useCallback, useMemo, useState } from "react";
 import { generatePath, useHistory } from "react-router";
@@ -55,7 +55,11 @@ const Ad = ({
   );
 
   const formattedDate = useMemo(
-    () => formatDistanceToNow(start_date, { locale: pl, addSuffix: true }),
+    () =>
+      formatDistanceToNow(addHours(start_date, 1), {
+        locale: pl,
+        addSuffix: true,
+      }),
     [start_date],
   );
 
