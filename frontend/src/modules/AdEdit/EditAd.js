@@ -1,13 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { generatePath, useHistory } from "react-router";
+import useUpdateAd from "../../services/Ads/useUpdateAd";
 import useInputState from "../NewAd/../../common/helpers/useInputState";
-import useUploadPhoto from "../NewAd/../../services/useUploadPhoto";
 import { routesPaths } from "../NewAd/../Routing/routesPaths";
 import Button from "../NewAd/../shared/components/Button";
 import Input from "../NewAd/../shared/components/Input";
 import Select from "../NewAd/../shared/components/Select";
 import TextArea from "../NewAd/../shared/components/TextArea";
-import useCategoriesOptions from "../NewAd/../shared/hooks/useCategoriesOptions";
 import DefaultLayout from "../NewAd/../shared/layouts/DefaultLayout";
 import FormSection from "../NewAd/./FormSection";
 import LabelWrapper from "../NewAd/./LabelWrapper";
@@ -16,8 +15,6 @@ import {
   ErrorWrapper,
   FormWrapper,
 } from "../NewAd/./NewAd.components";
-import { MultiPhotoSelect } from "../NewAd/./PhotoSelect";
-import useUpdateAd from "../../services/Ads/useUpdateAd";
 
 const EditAd = ({ data: initial, categories: categoriesOptions }) => {
   const [title, setTitle] = useInputState((initial.title || "").toString());

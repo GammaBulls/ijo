@@ -13,13 +13,14 @@ const useUpdateAd = () => {
       try {
         const data = await wretch
           .url(`/ad/${id}`)
-          .put({
+          .json({
             price: parseFloat(price),
             title,
             categoryId: categoryId.toString(),
             description,
             photos: [],
           })
+          .put()
           .json();
         setData(data);
         return data;
